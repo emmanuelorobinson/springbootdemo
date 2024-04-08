@@ -20,11 +20,15 @@ public class HibernatejpacrudApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
-			createStudent(studentDAO);
+//			createStudent(studentDAO);
 //			readStudent(studentDAO);
 //			queryAllStudents(studentDAO);
-			queryByLastName(studentDAO, "John");
+//			queryByLastName(studentDAO, "John");
+//			updateStudent(studentDAO);
+//			deleteStudent(studentDAO);
+			deleteAllStudents(studentDAO);
 		};
+
 
 	}
 
@@ -65,5 +69,32 @@ public class HibernatejpacrudApplication {
 		System.out.println("Student saved successfully");
 		System.out.println("Student ID: " + student.getId());
 
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		int studentId = 1;
+		System.out.println("Getting student with id: " + studentId);
+
+		Student myStudent = studentDAO.findById(studentId);
+
+		System.out.println("Updating student...");
+
+		myStudent.setLastName("Marq");
+		studentDAO.update(myStudent);
+
+		System.out.println("Updated student: " + myStudent);
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		int studentId = 6;
+		System.out.println("Deleting student id: " + studentId);
+
+		studentDAO.delete(studentId);
+	}
+
+	private void deleteAllStudents(StudentDAO studentDAO) {
+		System.out.println("Deleting all students");
+		int numRowsDeleted = studentDAO.deleteAll();
+		System.out.println("Deleted row count: " + numRowsDeleted);
 	}
 }
